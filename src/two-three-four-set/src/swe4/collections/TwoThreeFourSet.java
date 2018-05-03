@@ -100,4 +100,23 @@ public interface SortedTreeSet<T> extends SortedSet<T> {
  * pointers and landmark values.
  * @since   1.0
  */
-public class TwoThreeFourSet<T> implements SortedTreeSet<T> {}
+public class TwoThreeFourSet<T> implements SortedTreeSet<T> {
+    private class Node<T> {
+        /**
+         * Array of subtrees, can contain up to three subtrees as
+         * specified in the instructions
+         * 
+         */
+        private Node[]  subtrees    = new Node[3];
+        private T[]     landmarks   = new T[4];
+
+        public Node() {
+
+        };
+
+    }
+
+    public TwoThreeFourSet() {
+        
+    }
+}
