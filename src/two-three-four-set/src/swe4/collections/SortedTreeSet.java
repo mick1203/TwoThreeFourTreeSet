@@ -1,3 +1,5 @@
+package swe4.collections;
+
 /** 
  * Interface that extends the previously declared SortedSet<T> interface.
  * @author  Michael Burgstaller
@@ -12,4 +14,5 @@ public interface SortedTreeSet<T> extends SortedSet<T> {
      * @since   1.0
      */
     int height();
+    
 }

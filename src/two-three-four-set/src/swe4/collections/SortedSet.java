@@ -1,3 +1,8 @@
+package swe4.collections;
+
+import  java.util.Iterator;
+import  java.util.Comparator;
+
 /**
  * Interface that specifies how a SortedSet has to be implemented.
  * @author  Michael Burgstaller
@@ -7,23 +12,26 @@ public interface SortedSet<T> extends Iterable<T> {
     
     /**
      * Adds another element to the set.
-     * @return  Boolean value, specifies whether insertion was successful or 
+     * @param  elem Element to be added to the set 
+     * @return      Boolean value, specifies whether insertion was successful or 
      * not.
-     * @since   1.0
+     * @since       1.0
      */
     boolean add(T elem);
     
     /**
      * Gets an element of the set that is equal to the given one.
      * If there is no equal element this function returns null
-     * @return  Reference to the same element in the set, null if no equal 
+     * @param elem  Element to be searched in the set
+     * @return      Reference to the same element in the set, null if no equal 
      * element.
-     * @since   1.0
+     * @since       1.0
      */
     T   get(T elem);
 
     /**
      * Checks wether or not a given element is in the set.
+     * @param elem  Element to be checked if it exists in the set.
      * @return  Boolean value, true if the element is in the set, false if
      * otherwise.
      * @since   1.0
