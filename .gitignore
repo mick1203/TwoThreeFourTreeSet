@@ -1,0 +1,8 @@
+# exercise instructions
+instructions.pdf
+
+# java binaries
+src/*/bin
+
+# document creation
+doc/.latex/*.pdf

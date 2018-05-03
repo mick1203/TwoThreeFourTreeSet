@@ -1,0 +1,40 @@
+<project name="CodeMetrics" default="compile" basedir=".">
+
+	<!-- Specify your main class here. Omit the .class extension. -->
+	<property name="main.class" value="swe4.collections.TwoThreeFourSetTest"/>
+	<property name="program.jar" value="Collections.jar"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="target.dir" value="${basedir}/bin"/>
+
+	<target name="all" depends="clean,compile" 
+	        description="Clean build and dist directories, then compile"/>
+
+	<target name="compile" description="Compile Java sources">
+		<mkdir dir="${target.dir}" />
+		<javac srcdir="${src.dir}" destdir="${target.dir}" includeantruntime="false">
+			<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile" description="Run java application">
+		<java classname="${main.class}" fork="true" classpath="${target.dir}" />
+	</target>
+
+	<target name="jar" depends="compile" description="Package to java archive">
+	  <jar destfile="${target.dir}/${program.jar}"> 
+	  	<fileset dir="${target.dir}" includes="**/*.class"/>
+        <manifest>
+             <attribute name="Main-Class" value="${main.class}"/>
+         </manifest>
+	  </jar>
+	</target>
+
+	<target name="runjar" depends="jar" description="Run java application in java archive">
+		<java jar="${target.dir}/${program.jar}" fork="true" />
+	</target>
+
+	<target name="clean" description="Delete old build and dist directories">
+		<delete dir="${target.dir}" />
+	</target>
+
+</project>
