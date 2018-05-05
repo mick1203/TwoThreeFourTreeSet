@@ -1,9 +1,8 @@
 package swe4.collections;
 
+import static   org.junit.Assert.*;
+import          org.junit.Test;
+
 public class TwoThreeFourSetTest {
-
-    public static void main(String[] args) {
-        System.out.print("Hello World!");
-    }
-
+    
 }
