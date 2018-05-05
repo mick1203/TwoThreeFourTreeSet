@@ -88,9 +88,13 @@ public class TwoThreeFourTreeSet<T>
             return idx;
         }
 
-        public boolean add(T elem) {
-            // TODO add method
-            if (contains(elem)) return false;
+        public void prepareForInsertionAt(int n) {
+            // copy necessary elements
+            for (int i = landmarkCount; i > n; --i) {
+                landmarks[i] = landmarks[i - 1];
+                subtrees[i + 1] = subtrees[i];
+            } 
+        }
 
             // element hast to be inserted.
             
