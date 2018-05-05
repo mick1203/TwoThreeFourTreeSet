@@ -20,28 +20,28 @@ public class TwoThreeFourTreeSet<T>
          * specified in the instructions
          * 
          */
-        private TwoThreeFourTreeSet[] subtrees;
+        public TwoThreeFourTreeSet[] subtrees;
 
         /**
          * Array of T objects, specifying the value that separates two
          * subtrees
          */
-        private T[] landmarks;
+        public T[] landmarks;
 
         /**
          * Number of landmarks in the object
          */
-        private int landmarkCount;
+        public int landmarkCount;
 
         /**
          * A comparator object for the type T, can be null
          */
-        private Comparator<T> c = null;
+        public Comparator<T> c = null;
 
         /**
          * A TwoThreeFourTreeSet
          */
-        private TwoThreeFourTreeSet parent;
+        public TwoThreeFourTreeSet parent;
 
         @SuppressWarnings("unchecked")
         public Node() {
