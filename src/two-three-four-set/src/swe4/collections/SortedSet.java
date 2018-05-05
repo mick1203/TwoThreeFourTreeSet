@@ -13,8 +13,8 @@ public interface SortedSet<T> extends Iterable<T> {
     /**
      * Adds another element to the set.
      * @param  elem Element to be added to the set 
-     * @return      Boolean value, specifies whether insertion was successful or 
-     * not.
+     * @return      Boolean value, specifies whether insertion was successful 
+     * or not.
      * @since       1.0
      */
     boolean add(T elem);
