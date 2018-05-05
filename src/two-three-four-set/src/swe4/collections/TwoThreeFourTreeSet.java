@@ -2,6 +2,7 @@ package swe4.collections;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Class that implements a balanced tree. Otherwise called
@@ -9,45 +10,48 @@ import java.util.Iterator;
  * pointers and landmark values.
  * @author  Michael Burgstaller
  */
-public class TwoThreeFourTreeSet<T> 
+public class TwoThreeFourTreeSet<T extends Object> 
     implements SortedTreeSet<T> {
 
     private Node root;
 
     private class Node {
+
         /**
          * Array of Node objects, can contain up to three subtrees as
          * specified in the instructions
          * 
          */
-        public TwoThreeFourTreeSet[] subtrees;
+        public TwoThreeFourTreeSet<T>.Node[]   subtrees;
 
         /**
          * Array of T objects, specifying the value that separates two
          * subtrees
          */
-        public T[] landmarks;
+        public T[]      landmarks;
 
         /**
          * Number of landmarks in the object
          */
-        public int landmarkCount;
+        public int      landmarkCount;
 
         /**
          * A comparator object for the type T, can be null
          */
-        public Comparator<T> c = null;
+        private Comparator<T> c = null;
 
         /**
-         * A TwoThreeFourTreeSet
+         * A Node represent the parent node of the current one and 
+         * that helps traversing the tree
          */
-        public TwoThreeFourTreeSet parent;
+        public Node parent;
 
         @SuppressWarnings("unchecked")
         public Node() {
-            subtrees = new TwoThreeFourTreeSet[4];
+            subtrees = new TwoThreeFourTreeSet.Node[4];
             landmarks = (T[]) new Object[3];
             landmarkCount = 0;
+            parent = null;
         }
 
         public Node(Comparator<T> ca) {
@@ -64,7 +68,7 @@ public class TwoThreeFourTreeSet<T>
          * greater than the second one.
          */
         @SuppressWarnings("unchecked")
-        private int compare(T lhs, T rhs) {
+        public int compare(T lhs, T rhs) {
             if (c == null) {
                 // assume T implements comparable
                 return ((Comparable<T>) lhs).compareTo(rhs);
@@ -80,7 +84,7 @@ public class TwoThreeFourTreeSet<T>
          * @param n The value to be converted
          * @return  Index of the correct subtree
          */
-        private int getIndexForValue(T n) {
+        public int getIndexForValue(T n) {
             int idx = 0;
             while (idx < landmarkCount && compare(n, landmarks[idx]) >= 0) {
                 idx++;
@@ -99,20 +103,20 @@ public class TwoThreeFourTreeSet<T>
         public boolean isLeaf() {
             return subtrees[0] == null;
         }
-            
+
         public boolean isFull() {
             return landmarkCount >= 3;
         }
-            
+
         public void split() {           
             Node left = new Node(c);
             Node right = new Node(c);
             T middle = this.landmarks[1];
-
+    
             // set parent of new nodes
             left.parent = this.parent;
             right.parent = this.parent;
-
+    
             // set landmarks in child nodes
             left.landmarks[0] = this.landmarks[0];
             left.landmarkCount++;
@@ -153,7 +157,7 @@ public class TwoThreeFourTreeSet<T>
                 prepareForInsertionAt(idx);
                 landmarks[idx] = elem;
                 landmarkCount++;
-            return true;
+                return true;
             } else {
                 // element has to be inserted in a subtree
                 Node subtree = subtrees[idx];
@@ -161,7 +165,6 @@ public class TwoThreeFourTreeSet<T>
             }
         };
 
-        @SuppressWarnings("unchecked")
         public T get(T elem) {
             for (int i = 0; i < landmarkCount; ++i) {
                 if (compare(elem, landmarks[i]) == 0) {
@@ -171,21 +174,20 @@ public class TwoThreeFourTreeSet<T>
 
             int idx = getIndexForValue(elem);
             Node subtree = subtrees[idx];
-        
+
             // split if necessary
             if (isFull()) {
                 split();
-        }
-
+            }
+        
             return isLeaf() ? null: (T) subtree.get(elem);
         }
 
         public int size() {
             int n = landmarkCount;
-            for (int i = 0; i <= landmarkCount; ++i) {
-                TwoThreeFourTreeSet subtree = subtrees[i];
-                if (subtree != null) {
-                    n += subtree.size();
+            if (!isLeaf()) {
+                for (int i = 0; i <= landmarkCount; ++i) {
+                    n += subtrees[i].size(); 
                 }
             }
             return n;
@@ -215,7 +217,7 @@ public class TwoThreeFourTreeSet<T>
         public int height() {
             int max = -1;
             for (int i = 0; i < landmarkCount; ++i) {
-                TwoThreeFourTreeSet subtree = subtrees[i];
+                Node subtree = subtrees[i];
                 if (subtree != null) {
                     max = Math.max(max, subtree.height());
                 }
@@ -223,6 +225,24 @@ public class TwoThreeFourTreeSet<T>
             return max + 1;
         }
 
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("( ");
+            for (int i = 0; i < landmarkCount; ++i) {
+                sb.append(landmarks[i] + " ");
+            }
+            for (int i = 0; i <= landmarkCount; ++i) {
+                Node s = subtrees[i];
+                if (s != null) {
+                    sb.append(subtrees[i].toString());
+                }
+            }
+            sb.append(")");
+
+            return sb.toString();
+        }
     }
 
     public TwoThreeFourTreeSet() {
@@ -234,7 +254,7 @@ public class TwoThreeFourTreeSet<T>
     }
 
     @Override
-    public boolean add(T elem) {
+    public boolean add(T elem) { 
         if (contains(elem)) return false;
         return root.add(elem);
     };
@@ -245,6 +265,8 @@ public class TwoThreeFourTreeSet<T>
         if (root.isFull()) {
             Node n = new Node(comparator());
             root.parent = n;
+            n.depth = 0;
+            root.depth++;
             root.split();
             root = n;
         }
@@ -284,6 +306,11 @@ public class TwoThreeFourTreeSet<T>
     @Override
     public int height() {
         return root.height();
+    }
+
+    @Override
+    public String toString() {
+        return "[\n" + root.toString() + "\n]";
     }
 
 }
