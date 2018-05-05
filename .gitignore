@@ -9,3 +9,6 @@ doc/.latex/*.pdf
 
 # vscode settings
 .vscode
+
+# file system
+.DS_STORE
