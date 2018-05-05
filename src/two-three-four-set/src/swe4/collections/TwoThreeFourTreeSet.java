@@ -252,7 +252,7 @@ public class TwoThreeFourTreeSet<T>
 
     @Override
     public boolean contains(T elem) {
-        return root.contains(elem);
+        return get(elem) != null;
     }
 
     @Override
