@@ -171,7 +171,6 @@ public class TwoThreeFourTreeSet<T>
 
     }
 
-    @SuppressWarnings("unchecked")
     public TwoThreeFourTreeSet() {
         root = new Node();
     }
@@ -186,7 +185,6 @@ public class TwoThreeFourTreeSet<T>
     };
 
     @Override
-    @SuppressWarnings("unchecked")
     public T get(T elem) {
         return root.get(elem);
     }
