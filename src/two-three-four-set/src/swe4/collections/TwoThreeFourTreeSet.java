@@ -170,13 +170,14 @@ public class TwoThreeFourTreeSet<T>
             }
 
             int idx = getIndexForValue(elem);
-            TwoThreeFourTreeSet subtree = subtrees[idx];
+            Node subtree = subtrees[idx];
         
-            return subtree == null ? null: (T) subtree.get(elem);
+            // split if necessary
+            if (isFull()) {
+                split();
         }
 
-        public boolean contains(T elem) {
-            return get(elem) != null;
+            return isLeaf() ? null: (T) subtree.get(elem);
         }
 
         public int size() {
