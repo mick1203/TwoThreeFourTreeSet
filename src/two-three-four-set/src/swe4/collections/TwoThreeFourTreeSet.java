@@ -190,24 +190,16 @@ public class TwoThreeFourTreeSet<T>
             return n;
         }
 
-        @SuppressWarnings("unchecked")
-        public T first() {
-            TwoThreeFourTreeSet subtree = subtrees[0];
-            if (subtree != null) {
-                return (T) subtree.first();
-            } else {
-                return landmarks[0];
-            }
+        public T first() throws NoSuchElementException {
+            if (landmarkCount == 0) throw new NoSuchElementException();
+            Node subtree = subtrees[0];
+            return isLeaf()? landmarks[0]: (T) subtree.first();
         }
 
-        @SuppressWarnings("unchecked")
-        public T last() {
-            TwoThreeFourTreeSet subtree = subtrees[landmarkCount];
-            if (subtree != null) {
-                return (T) subtree.last();
-            } else {
-                return landmarks[landmarkCount - 1];
-            }
+        public T last() throws NoSuchElementException {
+            if (landmarkCount == 0) throw new NoSuchElementException();
+            Node subtree = subtrees[landmarkCount];
+            return isLeaf()? landmarks[landmarkCount - 1]: (T) subtree.last();
         } 
 
         public Comparator<T> comparator() {
