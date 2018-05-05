@@ -144,7 +144,21 @@ public class TwoThreeFourTreeSet<T>
             this.parent.landmarkCount++;
 
         }
+
+        public boolean add(T elem) {
+            // element has to be inserted.
+            int idx = getIndexForValue(elem);
+            if (isLeaf()) {
+                // element has to be inserted in current node
+                prepareForInsertionAt(idx);
+                landmarks[idx] = elem;
+                landmarkCount++;
             return true;
+            } else {
+                // element has to be inserted in a subtree
+                Node subtree = subtrees[idx];
+                return subtree.add(elem);
+            }
         };
 
         @SuppressWarnings("unchecked")
