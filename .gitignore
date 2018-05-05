@@ -6,3 +6,6 @@ src/*/bin
 
 # document creation
 doc/.latex/*.pdf
+
+# vscode settings
+.vscode
