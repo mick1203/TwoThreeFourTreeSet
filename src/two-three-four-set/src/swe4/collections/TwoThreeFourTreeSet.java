@@ -247,6 +247,13 @@ public class TwoThreeFourTreeSet<T>
 
     @Override
     public T get(T elem) {
+        // create new root if root is full
+        if (root.isFull()) {
+            Node n = new Node(comparator());
+            root.parent = n;
+            root.split();
+            root = n;
+        }
         return root.get(elem);
     }
 
