@@ -32,8 +32,8 @@ public interface SortedSet<T> extends Iterable<T> {
     /**
      * Checks wether or not a given element is in the set.
      * @param elem  Element to be checked if it exists in the set.
-     * @return  Boolean value, true if the element is in the set, false if
-     * otherwise.
+     * @return      Boolean value, true if the element is in the set, 
+     * false if otherwise.
      * @since   1.0
      */
     boolean contains(T elem);
