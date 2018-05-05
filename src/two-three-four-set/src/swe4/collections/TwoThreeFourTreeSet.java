@@ -96,8 +96,13 @@ public class TwoThreeFourTreeSet<T>
             } 
         }
 
-            // element hast to be inserted.
+        public boolean isLeaf() {
+            return subtrees[0] == null;
+        }
             
+        public boolean isFull() {
+            return landmarkCount >= 3;
+        }
             
 
 
