@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @version 1.0
  * @since   1.0
  */
-public class TwoThreeFourSet<T> 
+public class TwoThreeFourTreeSet<T> 
     implements SortedTreeSet<T> {
     
     /**
@@ -19,7 +19,7 @@ public class TwoThreeFourSet<T>
      * specified in the instructions
      * 
      */
-    private TwoThreeFourSet[] subtrees;
+    private TwoThreeFourTreeSet[] subtrees;
 
     /**
      * Array of T objects, specifying the value that separates two
@@ -71,13 +71,13 @@ public class TwoThreeFourSet<T>
     }
 
     @SuppressWarnings("unchecked")
-    public TwoThreeFourSet() {
-        subtrees = new TwoThreeFourSet[4];
+    public TwoThreeFourTreeSet() {
+        subtrees = new TwoThreeFourTreeSet[4];
         landmarks = (T[]) new Object[3];
         landmarkCount = 0;
     }
 
-    public TwoThreeFourSet(Comparator<T> ca) {
+    public TwoThreeFourTreeSet(Comparator<T> ca) {
         this();
         c = ca;
     }
@@ -105,7 +105,7 @@ public class TwoThreeFourSet<T>
         }
 
         int idx = getIndexForValue(elem);
-        TwoThreeFourSet subtree = subtrees[idx];
+        TwoThreeFourTreeSet subtree = subtrees[idx];
     
         return subtree == null ? null: (T) subtree.get(elem);
     }
@@ -119,7 +119,7 @@ public class TwoThreeFourSet<T>
     public int size() {
         int n = landmarkCount;
         for (int i = 0; i <= landmarkCount; ++i) {
-            TwoThreeFourSet subtree = subtrees[i];
+            TwoThreeFourTreeSet subtree = subtrees[i];
             if (subtree != null) {
                 n += subtree.size();
             }
@@ -130,7 +130,7 @@ public class TwoThreeFourSet<T>
     @Override
     @SuppressWarnings("unchecked")
     public T first() {
-        TwoThreeFourSet subtree = subtrees[0];
+        TwoThreeFourTreeSet subtree = subtrees[0];
         if (subtree != null) {
             return (T) subtree.first();
         } else {
@@ -141,7 +141,7 @@ public class TwoThreeFourSet<T>
     @Override
     @SuppressWarnings("unchecked")
     public T last() {
-        TwoThreeFourSet subtree = subtrees[landmarkCount];
+        TwoThreeFourTreeSet subtree = subtrees[landmarkCount];
         if (subtree != null) {
             return (T) subtree.last();
         } else {
@@ -164,7 +164,7 @@ public class TwoThreeFourSet<T>
     public int height() {
         int max = -1;
         for (int i = 0; i < landmarkCount; ++i) {
-            TwoThreeFourSet subtree = subtrees[i];
+            TwoThreeFourTreeSet subtree = subtrees[i];
             if (subtree != null) {
                 max = Math.max(max, subtree.height());
             }
