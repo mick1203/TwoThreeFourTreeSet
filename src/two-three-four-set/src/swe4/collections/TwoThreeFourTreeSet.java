@@ -242,6 +242,7 @@ public class TwoThreeFourTreeSet<T>
 
     @Override
     public boolean add(T elem) {
+        if (contains(elem)) return false;
         return root.add(elem);
     };
 
