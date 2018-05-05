@@ -104,8 +104,46 @@ public class TwoThreeFourTreeSet<T>
             return landmarkCount >= 3;
         }
             
+        public void split() {           
+            Node left = new Node(c);
+            Node right = new Node(c);
+            T middle = this.landmarks[1];
 
+            // set parent of new nodes
+            left.parent = this.parent;
+            right.parent = this.parent;
 
+            // set landmarks in child nodes
+            left.landmarks[0] = this.landmarks[0];
+            left.landmarkCount++;
+            right.landmarks[0] = this.landmarks[2];
+            right.landmarkCount++;
+    
+            // set subtrees in child nodes
+            left.subtrees[0] = this.subtrees[0];
+            left.subtrees[1] = this.subtrees[1];
+            right.subtrees[0] = this.subtrees[2];
+            right.subtrees[1] = this.subtrees[3];
+  
+            // set parent for subtrees
+            for (int i = 0; i < 4; ++i) {
+                Node subtree = this.subtrees[i];
+                if (subtree != null) {
+                    this.subtrees[i].parent = (i <= 1) ? left : right;
+                }
+            }
+
+            // get index of current node and prepare parent
+            int idx = this.parent.getIndexForValue(middle);
+            this.parent.prepareForInsertionAt(idx);
+
+            // write data to parent
+            this.parent.landmarks[idx] = middle;
+            this.parent.subtrees[idx] = left;
+            this.parent.subtrees[idx + 1] = right;
+            this.parent.landmarkCount++;
+
+        }
             return true;
         };
 
