@@ -184,6 +184,8 @@ public abstract class SortedTreeSetTestBase  {
   }
 
   @Test
+  // necessary because I run Java 9.
+  @SuppressWarnings("deprecation") 
   public void testIteratorSimple() {
     SortedSet<Integer> set = createSet();
     set.add(10);
