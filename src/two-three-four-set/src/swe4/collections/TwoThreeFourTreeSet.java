@@ -262,21 +262,14 @@ public class TwoThreeFourTreeSet<T extends Object>
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-
-            int h = this.height();
-            for (int i = 0; i < h; ++i) {
-                sb.append("    ");
-            }
-
-            sb.append(toNodeString() + "\n");
-
+            sb.append("[" + toNodeString() + "{");
             for (int i = 0; i <= landmarkCount; ++i) {
                 Node s = subtrees[i];
                 if (s != null) {
                     sb.append(subtrees[i].toString());
                 }
             }
-
+            sb.append("}]");
             return sb.toString();
         }
 
@@ -324,7 +317,6 @@ public class TwoThreeFourTreeSet<T extends Object>
          */
         private void loadCurrent() {
             if (currentNode != null) {
-                // valid index
                 current = currentNode.landmarks[i];
             } else {
                 current = null;
