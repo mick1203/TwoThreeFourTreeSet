@@ -73,6 +73,12 @@ public class TwoThreeFourTreeSet<T extends Object>
             return idx;
         }
 
+        /**
+         * Prepares a node for insertion at a given index, this means that
+         * the subtree references and the landmarks are shifted to
+         * accomodate the incoming values
+         * @param   n specifying the index at which should be cleared
+         */
         public void prepareForInsertionAt(int n) {
             // copy necessary elements
             for (int i = landmarkCount; i > n; --i) {
@@ -81,15 +87,30 @@ public class TwoThreeFourTreeSet<T extends Object>
             } 
         }
 
+        /**
+         * Checks if a node is a leaf, e.g. if it is at the bottom of the
+         * hierarchy and has no subtrees
+         * @return  Boolean stating if node is a leaf
+         */
         public boolean isLeaf() {
             return subtrees[0] == null;
         }
 
+        /**
+         * Checks if a node is full, e.g. if it has three landmarks in it
+         * @return  Boolean stating if the node is full
+         */
         public boolean isFull() {
             return landmarkCount >= 3;
         }
 
-        public void split() {           
+
+        /**
+         * Splits a node in two subnodes, passes them the comparator via the
+         * constructor, resets the subnodes parent, moves the landmarks to
+         * the correct subnode, resets the subtrees parents, updates parent
+        */
+        public void split() {
             Node left = new Node(c);
             Node right = new Node(c);
             T middle = this.landmarks[1];
@@ -127,9 +148,15 @@ public class TwoThreeFourTreeSet<T extends Object>
             this.parent.subtrees[idx] = left;
             this.parent.subtrees[idx + 1] = right;
             this.parent.landmarkCount++;
-
         }
 
+        /**
+         * Adds a node to the structure, is guaranteed to find a fitting node
+         * because the balancing of the tree is done with every get(), so no
+         * need to check for splitting
+         * @param   elem Element that should be inserted in the node
+         * @return  Boolean stating wether insertion was successfull
+         */
         public boolean add(T elem) {
             // element has to be inserted.
             int idx = getIndexForValue(elem);
@@ -146,6 +173,14 @@ public class TwoThreeFourTreeSet<T extends Object>
             }
         };
 
+        /**
+         * Returns a reference to a node saved in the nodes or any of its
+         * subtrees. Also handles the balancing of the tree if any nodes are
+         * full by splitting them.
+         * @param   elem , element to be searched in the node and its subtrees
+         * @return  Reference to the element if it is in the node, null
+         * otherwise
+         */
         public T get(T elem) {
             for (int i = 0; i < landmarkCount; ++i) {
                 if (compare(elem, landmarks[i]) == 0) {
@@ -162,6 +197,10 @@ public class TwoThreeFourTreeSet<T extends Object>
             return isLeaf() ? null: (T) subtree.get(elem);
         }
 
+        /**
+         * Returns the number of element saved in the node and its subtrees.
+         * @return  Count of elements
+         */
         public int size() {
             int n = landmarkCount;
             if (!isLeaf()) {
@@ -172,22 +211,40 @@ public class TwoThreeFourTreeSet<T extends Object>
             return n;
         }
 
+        /**
+         * Gets the first element in a node and its subtrees.
+         * @throws  NoSuchElementException if there is no first element
+         * @return  Reference to the first element
+         */
         public T first() throws NoSuchElementException {
             if (landmarkCount == 0) throw new NoSuchElementException();
             Node subtree = subtrees[0];
             return isLeaf()? landmarks[0]: (T) subtree.first();
         }
 
+        /**
+         * Gets the last element in a node and its subtrees.
+         * @throws  NoSuchElementException if there is no last element
+         * @return  Reference to the last element
+         */
         public T last() throws NoSuchElementException {
             if (landmarkCount == 0) throw new NoSuchElementException();
             Node subtree = subtrees[landmarkCount];
             return isLeaf()? landmarks[landmarkCount - 1]: (T) subtree.last();
         } 
 
+        /**
+         * Gets the comparator that is used in the node and its subtrees
+         * @return Comparator object
+         */
         public Comparator<T> comparator() {
             return c;
         };
 
+        /**
+         * Gets the maximum height of the nodes subtrees
+         * @return  Height of the tree
+         */
         public int height() {
             int max = -1;
             for (int i = 0; i < landmarkCount; ++i) {
@@ -199,6 +256,10 @@ public class TwoThreeFourTreeSet<T extends Object>
             return max + 1;
         }
 
+        /**
+         * Converts the data structure to a String
+         * @return  The tree in String format
+         */
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -225,6 +286,9 @@ public class TwoThreeFourTreeSet<T extends Object>
         }
     }
 
+    /**
+     * Iterator class for the class TwoThreeFourTreeSet<T>
+     */
     private class TwoThreeFourTreeSetIterator implements Iterator<T> {
         private Node currentNode;
         private int i;
@@ -236,6 +300,10 @@ public class TwoThreeFourTreeSet<T extends Object>
             loadCurrent();
         }
 
+        /**
+         * Loads value from current parameters, sets it to null if 
+         * parameters are invalid
+         */
         private void loadCurrent() {
             if (currentNode != null) {
                 // valid index
@@ -318,25 +386,29 @@ public class TwoThreeFourTreeSet<T extends Object>
     }
 
     /**
-         * Compare function wrapper, allows c to be null
-         * @param   lhs Object to be compared
-         * @param   rhs Object the first one is compared to
-         * @return  Returns a negative number, 0 or a positive number
-         * depending on the first object being less than, equal, or
-         * greater than the second one.
-         */
-        @SuppressWarnings("unchecked")
-        public int compare(T lhs, T rhs) {
-            Comparator<T> c = comparator();
-            if (c == null) {
-                // assume T implements comparable
-                return ((Comparable<T>) lhs).compareTo(rhs);
-            } else {
-                // compare with comparator
-                return c.compare(lhs, rhs);
-            }
+     * Compare function wrapper, allows c to be null
+     * @param   lhs Object to be compared
+     * @param   rhs Object the first one is compared to
+     * @return  Returns a negative number, 0 or a positive number
+     * depending on the first object being less than, equal, or
+     * greater than the second one.
+     */
+    @SuppressWarnings("unchecked")
+    public int compare(T lhs, T rhs) {
+        Comparator<T> c = comparator();
+        if (c == null) {
+            // assume T implements comparable
+            return ((Comparable<T>) lhs).compareTo(rhs);
+        } else {
+            // compare with comparator
+            return c.compare(lhs, rhs);
         }
+    }
 
+    /**
+     * Gets the first node in the data structure
+     * @return Reference to the first node in the structure
+     */
     private Node getFirstNode() {
         Node tmp = root;
         while(!tmp.isLeaf()) {
