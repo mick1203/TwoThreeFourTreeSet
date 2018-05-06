@@ -157,9 +157,7 @@ public class TwoThreeFourTreeSet<T extends Object>
             Node subtree = subtrees[idx];
 
             // split if necessary
-            if (isFull()) {
-                split();
-            }
+            if (isFull()) split();
         
             return isLeaf() ? null: (T) subtree.get(elem);
         }
@@ -269,8 +267,6 @@ public class TwoThreeFourTreeSet<T extends Object>
         if (root.isFull()) {
             Node n = new Node(comparator());
             root.parent = n;
-            n.depth = 0;
-            root.depth++;
             root.split();
             root = n;
         }
