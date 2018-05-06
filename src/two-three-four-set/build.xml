@@ -1,4 +1,4 @@
-<project name="scribble-fx" default="compile" basedir=".">
+<project name="two-three-four-set" default="compile" basedir=".">
 
 	<!-- Specify your main class here. Omit the .class extension. -->
 	<property name="main.class" value="swe4.collections.Main" />

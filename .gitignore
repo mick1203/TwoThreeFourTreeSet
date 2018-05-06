@@ -3,6 +3,7 @@ instructions.pdf
 
 # java binaries
 src/*/bin
+src/*/jar
 
 # document creation
 doc/.latex/*.pdf
@@ -12,3 +13,4 @@ doc/.latex/*.pdf
 
 # file system
 .DS_STORE
+src/*/flipbook
