@@ -219,6 +219,21 @@ public class TwoThreeFourTreeSet<T extends Object>
         }
     }
 
+    private class TwoThreeFourTreeSetIterator implements Iterator<T> {
+        private Node current;
+        private int i;
+
+        public TwoThreeFourTreeSetIterator(Node start) {
+            current = start;
+            i = 0;
+        }
+
+        public boolean hasNext() {
+            return false;
+        }
+        public T next() {
+        return null;
+    }
     public TwoThreeFourTreeSet() {
         root = new Node();
     }
