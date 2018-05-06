@@ -203,17 +203,23 @@ public class TwoThreeFourTreeSet<T extends Object>
         public String toString() {
             StringBuilder sb = new StringBuilder();
 
+            int h = this.height();
+            for (int i = 0; i < h; ++i) {
+                sb.append("    ");
+            }
+
             sb.append("( ");
             for (int i = 0; i < landmarkCount; ++i) {
                 sb.append(landmarks[i] + " ");
             }
+            sb.append(")\n");
+
             for (int i = 0; i <= landmarkCount; ++i) {
                 Node s = subtrees[i];
                 if (s != null) {
                     sb.append(subtrees[i].toString());
                 }
             }
-            sb.append(")");
 
             return sb.toString();
         }
