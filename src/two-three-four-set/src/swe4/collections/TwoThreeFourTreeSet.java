@@ -183,9 +183,7 @@ public class TwoThreeFourTreeSet<T extends Object>
          */
         public T get(T elem) {
             for (int i = 0; i < landmarkCount; ++i) {
-                if (compare(elem, landmarks[i]) == 0) {
-                    return landmarks[i];
-                }
+                if (compare(elem, landmarks[i]) == 0) return landmarks[i];
             }
 
             int idx = getIndexForValue(elem);
@@ -204,9 +202,8 @@ public class TwoThreeFourTreeSet<T extends Object>
         public int size() {
             int n = landmarkCount;
             if (!isLeaf()) {
-                for (int i = 0; i <= landmarkCount; ++i) {
+                for (int i = 0; i <= landmarkCount; ++i)
                     n += subtrees[i].size(); 
-                }
             }
             return n;
         }
@@ -219,7 +216,8 @@ public class TwoThreeFourTreeSet<T extends Object>
         public T first() throws NoSuchElementException {
             if (landmarkCount == 0) throw new NoSuchElementException();
             Node subtree = subtrees[0];
-            return isLeaf()? landmarks[0]: (T) subtree.first();
+            T element = landmarks[0];
+            return isLeaf()? element: (T) subtree.first();
         }
 
         /**
@@ -230,7 +228,8 @@ public class TwoThreeFourTreeSet<T extends Object>
         public T last() throws NoSuchElementException {
             if (landmarkCount == 0) throw new NoSuchElementException();
             Node subtree = subtrees[landmarkCount];
-            return isLeaf()? landmarks[landmarkCount - 1]: (T) subtree.last();
+            T element = landmarks[landmarkCount - 1];
+            return isLeaf()? element : (T) subtree.last();
         } 
 
         /**
@@ -269,11 +268,7 @@ public class TwoThreeFourTreeSet<T extends Object>
                 sb.append("    ");
             }
 
-            sb.append("( ");
-            for (int i = 0; i < landmarkCount; ++i) {
-                sb.append(landmarks[i] + " ");
-            }
-            sb.append(")\n");
+            sb.append(toNodeString() + "\n");
 
             for (int i = 0; i <= landmarkCount; ++i) {
                 Node s = subtrees[i];
@@ -284,8 +279,31 @@ public class TwoThreeFourTreeSet<T extends Object>
 
             return sb.toString();
         }
-    }
 
+        public String toNodeString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("(");
+            for (int i = 0; i < landmarkCount; ++i) {
+                sb.append(landmarks[i]);
+                if (i < landmarkCount - 1) sb.append(",");
+            }
+            sb.append(")");
+            return sb.toString();
+        }
+
+        public String toPHTPAString(String indent, Boolean last) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(indent + "╚═" + this.toNodeString() + "\n");
+            indent += (last ? "    " : "║   ");
+            if (!isLeaf()) {
+                for (int i = landmarkCount; i > 0; --i) {
+                    sb.append(this.subtrees[i].toPHTPAString(indent, false));
+                }
+                sb.append(subtrees[0].toPHTPAString(indent, true));    
+            } 
+            return sb.toString();
+        }
+    }
     /**
      * Iterator class for the class TwoThreeFourTreeSet<T>
      */
@@ -473,6 +491,10 @@ public class TwoThreeFourTreeSet<T extends Object>
     @Override
     public String toString() {
         return "[\n" + root.toString() + "\n]";
+    }
+
+    public String toBeautifulString() {
+        return root.toPHTPAString("", true);
     }
 
 }
