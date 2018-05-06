@@ -220,20 +220,89 @@ public class TwoThreeFourTreeSet<T extends Object>
     }
 
     private class TwoThreeFourTreeSetIterator implements Iterator<T> {
-        private Node current;
+        private Node currentNode;
         private int i;
+        private T current;
 
         public TwoThreeFourTreeSetIterator(Node start) {
-            current = start;
+            currentNode = start;
             i = 0;
+            loadCurrent();
+        }
+
+        private void loadCurrent() {
+            if (currentNode != null) {
+                // valid index
+                current = currentNode.landmarks[i];
+            } else {
+                current = null;
+            }
         }
 
         public boolean hasNext() {
-            return false;
+            return current != null;
         }
+
         public T next() {
-        return null;
+            if (!hasNext()) throw new NoSuchElementException();
+            
+            T tmp = current;
+            
+            if (currentNode.isLeaf()) {
+                if (i >= currentNode.landmarkCount - 1) {
+                    // precondition: node is finished
+                    Node parent = currentNode.parent;
+                    if (parent != null) {
+                        // precondition: can ascend a level
+                        do {
+                            i = parent.getIndexForValue(tmp);
+                            currentNode = parent;
+                            parent = currentNode.parent;
+                        } while (
+                            parent != null && 
+                            i == currentNode.landmarkCount
+                        );
+                        if (tmp == last()) {
+                            currentNode = null;
+                        }
+                    } else {
+                        // precondition: cannot ascend a level
+                        currentNode = null;
+                    }
+                } else {
+                    i++;
+                }
+            } else {
+                if (i == currentNode.landmarkCount) {
+                    // precondition: node is finished
+                    
+                    Node parent = currentNode.parent;
+                    if (parent != null) {
+                        // precondition: can ascend another level
+                        do {
+                            i = parent.getIndexForValue(tmp);
+                            currentNode = parent;
+                            parent = currentNode.parent;
+                        } while (
+                            parent != null && 
+                            i == currentNode.landmarkCount
+                        );
+                    } 
+                } else {
+                    currentNode = currentNode.subtrees[i + 1];
+                    while (!currentNode.isLeaf()) {
+                        currentNode = currentNode.subtrees[0];
+                    }
+                    i = 0;
+                }
+            }
+
+            loadCurrent();
+            
+            return tmp;
+        }
     }
+
     public TwoThreeFourTreeSet() {
         root = new Node();
     }
