@@ -60,25 +60,6 @@ public class TwoThreeFourTreeSet<T extends Object>
         }
 
         /**
-         * Compare function wrapper, allows c to be null
-         * @param   lhs Object to be compared
-         * @param   rhs Object the first one is compared to
-         * @return  Returns a negative number, 0 or a positive number
-         * depending on the first object being less than, equal, or
-         * greater than the second one.
-         */
-        @SuppressWarnings("unchecked")
-        public int compare(T lhs, T rhs) {
-            if (c == null) {
-                // assume T implements comparable
-                return ((Comparable<T>) lhs).compareTo(rhs);
-            } else {
-                // compare with comparator
-                return c.compare(lhs, rhs);
-            }
-        }
-
-        /**
          * Convert a given value to index of the subtree that value belongs
          * to.
          * @param n The value to be converted
@@ -209,11 +190,6 @@ public class TwoThreeFourTreeSet<T extends Object>
             return c;
         };
 
-        public Iterator<T> iterator() {
-            // TODO Create iterator method
-            return null;
-        }
-
         public int height() {
             int max = -1;
             for (int i = 0; i < landmarkCount; ++i) {
@@ -251,6 +227,34 @@ public class TwoThreeFourTreeSet<T extends Object>
 
     public TwoThreeFourTreeSet(Comparator<T> ca) {
         root = new Node(ca);
+    }
+
+    /**
+         * Compare function wrapper, allows c to be null
+         * @param   lhs Object to be compared
+         * @param   rhs Object the first one is compared to
+         * @return  Returns a negative number, 0 or a positive number
+         * depending on the first object being less than, equal, or
+         * greater than the second one.
+         */
+        @SuppressWarnings("unchecked")
+        public int compare(T lhs, T rhs) {
+            Comparator<T> c = comparator();
+            if (c == null) {
+                // assume T implements comparable
+                return ((Comparable<T>) lhs).compareTo(rhs);
+            } else {
+                // compare with comparator
+                return c.compare(lhs, rhs);
+            }
+        }
+
+    private Node getFirstNode() {
+        Node tmp = root;
+        while(!tmp.isLeaf()) {
+            tmp = tmp.subtrees[0];
+        }
+        return tmp;
     }
 
     @Override
@@ -300,7 +304,7 @@ public class TwoThreeFourTreeSet<T extends Object>
 
     @Override
     public Iterator<T> iterator() {
-        return root.iterator();
+        return new TwoThreeFourTreeSetIterator(getFirstNode());
     }
 
     @Override
