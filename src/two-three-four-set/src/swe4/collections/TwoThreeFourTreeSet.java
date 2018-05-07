@@ -202,8 +202,9 @@ public class TwoThreeFourTreeSet<T extends Object>
         public int size() {
             int n = landmarkCount;
             if (!isLeaf()) {
-                for (int i = 0; i <= landmarkCount; ++i)
+                for (int i = 0; i <= landmarkCount; ++i) {
                     n += subtrees[i].size(); 
+            }
             }
             return n;
         }
@@ -286,10 +287,11 @@ public class TwoThreeFourTreeSet<T extends Object>
 
         public String toPHTPAString(String indent, Boolean last) {
             StringBuilder sb = new StringBuilder();
-            sb.append(indent + "╚═" + this.toNodeString() + "\n");
-            indent += (last ? "    " : "║   ");
+            String intersection = (last ? "╚═" : "╠═");
+            sb.append(indent + intersection + this.toNodeString() + "\n");
             if (!isLeaf()) {
-                for (int i = landmarkCount; i > 0; --i) {
+                indent += (last ? "    " : "║   ");
+                for (int i = landmarkCount; i >= 0; --i) {
                     sb.append(this.subtrees[i].toPHTPAString(indent, false));
                 }
                 sb.append(subtrees[0].toPHTPAString(indent, true));    
@@ -482,7 +484,7 @@ public class TwoThreeFourTreeSet<T extends Object>
 
     @Override
     public String toString() {
-        return "[\n" + root.toString() + "\n]";
+        return root.toString();
     }
 
     public String toBeautifulString() {
