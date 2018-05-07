@@ -305,34 +305,28 @@ public class TwoThreeFourTreeSet<T extends Object>
     private class TwoThreeFourTreeSetIterator implements Iterator<T> {
         private Node currentNode;
         private int i;
-        private T current;
 
         public TwoThreeFourTreeSetIterator(Node start) {
             currentNode = start;
             i = 0;
-            loadCurrent();
         }
 
         /**
          * Loads value from current parameters, sets it to null if 
          * parameters are invalid
          */
-        private void loadCurrent() {
-            if (currentNode != null) {
-                current = currentNode.landmarks[i];
-            } else {
-                current = null;
-            }
+        private T loadCurrent() {
+            return currentNode == null ? null: currentNode.landmarks[i];
         }
 
         public boolean hasNext() {
-            return current != null;
+            return loadCurrent() != null;
         }
 
         public T next() {
             if (!hasNext()) throw new NoSuchElementException();
             
-            T tmp = current;
+            T tmp = loadCurrent();
             
             if (currentNode.isLeaf()) {
                 if (i >= currentNode.landmarkCount - 1) {
@@ -351,14 +345,13 @@ public class TwoThreeFourTreeSet<T extends Object>
                     i++;
                 }
             } else {
+                // precondition: next subtree
                 currentNode = currentNode.subtrees[i + 1];
                 while (!currentNode.isLeaf()) {
                     currentNode = currentNode.subtrees[0];
                 }
                 i = 0;
             }
-
-            loadCurrent();
             
             return tmp;
         }
