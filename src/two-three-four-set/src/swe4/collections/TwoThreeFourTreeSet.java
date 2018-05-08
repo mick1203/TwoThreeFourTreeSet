@@ -38,7 +38,7 @@ public class TwoThreeFourTreeSet<T extends Object>
         /**
          * A comparator object for the type T, can be null
          */
-        private Comparator<T> c = null;
+        public Comparator<T> c = null;
 
         /**
          * A Node represent the parent node of the current one and 
@@ -232,14 +232,6 @@ public class TwoThreeFourTreeSet<T extends Object>
             T element = landmarks[landmarkCount - 1];
             return isLeaf()? element : (T) subtree.last();
         } 
-
-        /**
-         * Gets the comparator that is used in the node and its subtrees
-         * @return Comparator object
-         */
-        public Comparator<T> comparator() {
-            return c;
-        };
 
         /**
          * Gets the maximum height of the nodes subtrees
@@ -437,7 +429,7 @@ public class TwoThreeFourTreeSet<T extends Object>
 
     @Override
     public Comparator<T> comparator() {
-        return root.comparator();
+        return root.c;
     };
 
     @Override
