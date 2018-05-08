@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import org.junit.Test ;
+import org.junit.Test;
 import static org.junit.Assert.*;
 import swe4.collections.SortedSet;
 import swe4.collections.SortedTreeSet;
