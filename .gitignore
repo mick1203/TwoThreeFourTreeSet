@@ -6,11 +6,12 @@ src/*/bin
 src/*/jar
 
 # document creation
-doc/.latex/*.pdf
+doc/.latex
+!doc/.latex/*.pdf
 
 # vscode settings
 .vscode
 
 # file system
 .DS_STORE
-src/*/flipbook
+*.dat
