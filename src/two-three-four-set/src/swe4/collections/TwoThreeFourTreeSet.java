@@ -210,6 +210,18 @@ public class TwoThreeFourTreeSet<T extends Object>
         }
 
         /**
+         * Gets the first node in the data structure
+         * @return Reference to the first node in the structure
+         */
+        public Node getFirstNode() {
+            Node tmp = this;
+            while(!tmp.isLeaf()) {
+                tmp = tmp.subtrees[0];
+            }
+            return tmp;
+        }
+
+        /**
          * Gets the first element in a node and its subtrees.
          * @throws  NoSuchElementException if there is no first element
          * @return  Reference to the first element
@@ -338,10 +350,7 @@ public class TwoThreeFourTreeSet<T extends Object>
                 }
             } else {
                 // precondition: next subtree
-                currentNode = currentNode.subtrees[i + 1];
-                while (!currentNode.isLeaf()) {
-                    currentNode = currentNode.subtrees[0];
-                }
+                currentNode = currentNode.subtrees[i + 1].getFirstNode();
                 i = 0;
             }
             
@@ -375,18 +384,6 @@ public class TwoThreeFourTreeSet<T extends Object>
             // compare with comparator
             return c.compare(lhs, rhs);
         }
-    }
-
-    /**
-     * Gets the first node in the data structure
-     * @return Reference to the first node in the structure
-     */
-    private Node getFirstNode() {
-        Node tmp = root;
-        while(!tmp.isLeaf()) {
-            tmp = tmp.subtrees[0];
-        }
-        return tmp;
     }
 
     @Override
@@ -434,7 +431,7 @@ public class TwoThreeFourTreeSet<T extends Object>
 
     @Override
     public Iterator<T> iterator() {
-        return new TwoThreeFourTreeSetIterator(getFirstNode());
+        return new TwoThreeFourTreeSetIterator(root.getFirstNode());
     }
 
     @Override
