@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * @author  Michael Burgstaller
  */
 public class TwoThreeFourTreeSet<T extends Object> 
-    implements SortedTreeSet<T> {
+    implements SortedTreeSet<T>, Iterable<T> {
 
     private Node root;
 
@@ -296,13 +296,13 @@ public class TwoThreeFourTreeSet<T extends Object>
             if (!isLeaf()) {
                 indent += (last ? "    " : "║   ");
                 for (int i = landmarkCount; i >= 0; --i) {
-                    sb.append(this.subtrees[i].toPHTPAString(indent, false));
+                    sb.append(this.subtrees[i].toPHTPAString(indent, i == 0));
                 }
-                sb.append(subtrees[0].toPHTPAString(indent, true));    
             } 
             return sb.toString();
         }
     }
+    
     /**
      * Iterator class for the class TwoThreeFourTreeSet<T>
      */
