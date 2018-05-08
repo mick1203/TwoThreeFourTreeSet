@@ -1,0 +1,46 @@
+Buildfile: /Users/michael/ownCloud/FHOOE/04-SS-18/SWE/UE/06/src/two-three-four-set/build.xml
+
+compile:
+    [javac] Compiling 1 source file to /Users/michael/ownCloud/FHOOE/04-SS-18/SWE/UE/06/src/two-three-four-set/bin
+
+copy-resources:
+
+run-unit-tests:
+    [junit] Testsuite: swe4.tests.TwoThreeFourSetTest
+    [junit] Tests run: 32, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1,27 sec
+    [junit] 
+    [junit] Testcase: testAddReverse took 0,03 sec
+    [junit] Testcase: testCreation took 0,001 sec
+    [junit] Testcase: testHeightEmpty took 0 sec
+    [junit] Testcase: testToString took 0,039 sec
+    [junit] Testcase: testRootSplitting took 0 sec
+    [junit] Testcase: testNoComparatorClassWithComparator took 0,002 sec
+    [junit] Testcase: testIteratorEmptySet took 0 sec
+    [junit] Testcase: testRangeBasedFor took 0,001 sec
+    [junit] Testcase: testComparatorException took 0 sec
+    [junit] Testcase: testCustomObject took 0 sec
+    [junit] Testcase: testHeight took 0,714 sec
+    [junit] Testcase: testConstructorWithComparator took 0,001 sec
+    [junit] Testcase: testFirstWithEmptySet took 0 sec
+    [junit] Testcase: testContainsSimple took 0 sec
+    [junit] Testcase: testComparator took 0,001 sec
+    [junit] Testcase: testGet took 0,007 sec
+    [junit] Testcase: testIteratorSimple took 0 sec
+    [junit] Testcase: testSize took 0 sec
+    [junit] Testcase: testLinearAdd took 0,059 sec
+    [junit] Testcase: testAddMultiple took 0,004 sec
+    [junit] Testcase: testRandomAdd took 0,296 sec
+    [junit] Testcase: testContains took 0 sec
+    [junit] Testcase: testAddSimple took 0 sec
+    [junit] Testcase: testFirstLast took 0,001 sec
+    [junit] Testcase: testAddMultipleSimple took 0 sec
+    [junit] Testcase: testIteratorException1 took 0,001 sec
+    [junit] Testcase: testIteratorException2 took 0 sec
+    [junit] Testcase: testSizeSimple took 0 sec
+    [junit] Testcase: testGetSimple took 0 sec
+    [junit] Testcase: testSorted took 0,042 sec
+    [junit] Testcase: testLastWithEmptySet took 0,001 sec
+    [junit] Testcase: testIterator took 0,017 sec
+
+BUILD SUCCESSFUL
+Total time: 2 seconds
